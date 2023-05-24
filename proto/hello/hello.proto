@@ -4,7 +4,7 @@ package hello;
 
 option go_package = "github.com/thetherington/my-grpc-proto/protogen/go/hello";
 
-message HelloRquest {
+message HelloRequest {
     string name = 1;
     uint32 age = 16;
 }
@@ -14,5 +14,5 @@ message HelloResponse {
 }
 
 service HelloService {
-    rpc SayHello (HelloRquest) returns (HelloResponse);
+    rpc SayHello (HelloRequest) returns (HelloResponse);
 }
