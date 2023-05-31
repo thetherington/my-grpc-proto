@@ -19,4 +19,13 @@ service ResiliencyService {
     rpc ServerStreamingResiliency (ResiliencyRequest) returns (stream ResiliencyResponse);
     rpc ClientStreamingResiliency (stream ResiliencyRequest) returns (ResiliencyResponse);
     rpc BiDirectionalResiliency (stream ResiliencyRequest) returns (stream ResiliencyResponse);
+    
+}
+
+service ResiliencyWithMetadataService {
+    rpc UnaryResiliencyMetadata (ResiliencyRequest) returns (ResiliencyResponse);
+    rpc ServerStreamingResiliencyMetadata (ResiliencyRequest) returns (stream ResiliencyResponse);
+    rpc ClientStreamingResiliencyMetadata (stream ResiliencyRequest) returns (ResiliencyResponse);
+    rpc BiDirectionalResiliencyMetadata (stream ResiliencyRequest) returns (stream ResiliencyResponse);
+    
 }
