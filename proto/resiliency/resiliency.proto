@@ -63,7 +63,7 @@ service ResiliencyService {
     }
     rpc ServerStreamingResiliency (ResiliencyRequest) returns (stream ResiliencyResponse) {
         option (google.api.http) = {
-            get: "/api/resiliency/v1/server_streaming/{min_delay_second}/{max_delay_Second}"
+            get: "/api/resiliency/v1/server_streaming/{min_delay_second}/{max_delay_second}"
         };
     }
     rpc ClientStreamingResiliency (stream ResiliencyRequest) returns (ResiliencyResponse) {
