@@ -2,30 +2,156 @@ syntax = "proto3";
 
 package resiliency;
 
+import "proto/google/api/annotations.proto";
+import "proto/protoc-gen-openapiv2/options/annotations.proto";
+
 option go_package = "github.com/thetherington/my-grpc-proto/protogen/go/resiliency";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        title: "Course - Protobuf & gRPC";
+        version: "1.0.0";
+    };
+    host: "localhost:8081";
+    schemes: HTTP;
+    produces: "application/json";
+};
+
 message ResiliencyRequest {
-    int32 min_delay_second = 1 [json_name = "min_delay_second"];
-    int32 max_delay_second = 2 [json_name = "max_delay_second"];
-    repeated uint32 status_codes = 3 [json_name = "status_codes"];
+    int32 min_delay_second = 1 
+    [
+        json_name = "min_delay_second",
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Minimum delay in second (inclusive)",
+            format: "integer",
+            example: "2"
+        }
+    ];
+    int32 max_delay_second = 2
+    [
+        json_name = "max_delay_second",
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Maximum delay in second (inclusive)",
+            format: "integer",
+            example: "7"
+        }
+    ];
+    repeated uint32 status_codes = 3
+    [
+        json_name = "status_codes",
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Array of gRPC status codes to be generated (numeric)",
+        }
+    ];
 }
 
 message ResiliencyResponse {
-    string dummy_string = 1 [json_name = "dummy_string"];
+    string dummy_string = 1 
+    [
+        json_name = "dummy_string",
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Dummy string for response",
+        }
+    ];
 }
 
 service ResiliencyService {
-    rpc UnaryResiliency (ResiliencyRequest) returns (ResiliencyResponse);
-    rpc ServerStreamingResiliency (ResiliencyRequest) returns (stream ResiliencyResponse);
-    rpc ClientStreamingResiliency (stream ResiliencyRequest) returns (ResiliencyResponse);
-    rpc BiDirectionalResiliency (stream ResiliencyRequest) returns (stream ResiliencyResponse);
-    
+    rpc UnaryResiliency (ResiliencyRequest) returns (ResiliencyResponse) {
+        option (google.api.http) = {
+            get: "/api/resiliency/v1/unary"
+        };
+    }
+    rpc ServerStreamingResiliency (ResiliencyRequest) returns (stream ResiliencyResponse) {
+        option (google.api.http) = {
+            get: "/api/resiliency/v1/server_streaming/{min_delay_second}/{max_delay_Second}"
+        };
+    }
+    rpc ClientStreamingResiliency (stream ResiliencyRequest) returns (ResiliencyResponse) {
+        option (google.api.http) = {
+            get: "/api/resiliency/v1/client_streaming"
+        };
+    }
+    rpc BiDirectionalResiliency (stream ResiliencyRequest) returns (stream ResiliencyResponse) {
+        option (google.api.http) = {
+            get: "/api/resiliency/v1/bidirectional_streaming"
+        };
+    }
 }
 
 service ResiliencyWithMetadataService {
-    rpc UnaryResiliencyMetadata (ResiliencyRequest) returns (ResiliencyResponse);
-    rpc ServerStreamingResiliencyMetadata (ResiliencyRequest) returns (stream ResiliencyResponse);
-    rpc ClientStreamingResiliencyMetadata (stream ResiliencyRequest) returns (ResiliencyResponse);
-    rpc BiDirectionalResiliencyMetadata (stream ResiliencyRequest) returns (stream ResiliencyResponse);
+    // this comment will be generated as OpenAPI summary
+    // for UnaryResiliencyMetadata
+    rpc UnaryResiliencyMetadata (ResiliencyRequest) returns (ResiliencyResponse) {
+        option (google.api.http) = {
+            post: "/api/resiliency/v1/metadata/unary"
+            body: "*"
+        };
+    }
+    rpc ServerStreamingResiliencyMetadata (ResiliencyRequest) returns (stream ResiliencyResponse) {
+        option (google.api.http) = {
+            post: "/api/resiliency/v1/metadata/server_streaming"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Summary for ServerStreamingResiliencyWithMetadata",
+            description: "Description for ServerStreamingResiliencyWithMetadata",
+            responses: {
+                key: "200",
+                value: {
+                    description: "Sample response, 200 when ..."
+                }
+            },
+            responses: {
+                key: "400",
+                value: {
+                    description: "Sample response, 400 when ..."
+                }
+            }
+        };
+    }
+    rpc ClientStreamingResiliencyMetadata (stream ResiliencyRequest) returns (ResiliencyResponse) {
+        option (google.api.http) = {
+            post: "/api/resiliency/v1/metadata/client_streaming"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Summary for ClientStreamingResiliencyMetadata",
+            description: "Description for ClientStreamingResiliencyMetadata",
+            responses: {
+                key: "200",
+                value: {
+                    description: "Sample response, 200 when ..."
+                }
+            },
+            responses: {
+                key: "400",
+                value: {
+                    description: "Sample response, 400 when ..."
+                }
+            }
+        };
+    }
+    rpc BiDirectionalResiliencyMetadata (stream ResiliencyRequest) returns (stream ResiliencyResponse) {
+        option (google.api.http) = {
+            post: "/api/resiliency/v1/metadata/bidirectional_streaming"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Summary for BiDirectionalResiliencyMetadata",
+            description: "Description for BiDirectionalResiliencyMetadata",
+            responses: {
+                key: "200",
+                value: {
+                    description: "Sample response, 200 when ..."
+                }
+            },
+            responses: {
+                key: "400",
+                value: {
+                    description: "Sample response, 400 when ..."
+                }
+            }
+        };
+    }
     
 }
