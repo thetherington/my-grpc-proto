@@ -324,6 +324,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ResiliencyWithMetadataServiceClient interface {
+	// this comment will be generated as OpenAPI summary
+	// for UnaryResiliencyMetadata
 	UnaryResiliencyMetadata(ctx context.Context, in *ResiliencyRequest, opts ...grpc.CallOption) (*ResiliencyResponse, error)
 	ServerStreamingResiliencyMetadata(ctx context.Context, in *ResiliencyRequest, opts ...grpc.CallOption) (ResiliencyWithMetadataService_ServerStreamingResiliencyMetadataClient, error)
 	ClientStreamingResiliencyMetadata(ctx context.Context, opts ...grpc.CallOption) (ResiliencyWithMetadataService_ClientStreamingResiliencyMetadataClient, error)
@@ -448,6 +450,8 @@ func (x *resiliencyWithMetadataServiceBiDirectionalResiliencyMetadataClient) Rec
 // All implementations must embed UnimplementedResiliencyWithMetadataServiceServer
 // for forward compatibility
 type ResiliencyWithMetadataServiceServer interface {
+	// this comment will be generated as OpenAPI summary
+	// for UnaryResiliencyMetadata
 	UnaryResiliencyMetadata(context.Context, *ResiliencyRequest) (*ResiliencyResponse, error)
 	ServerStreamingResiliencyMetadata(*ResiliencyRequest, ResiliencyWithMetadataService_ServerStreamingResiliencyMetadataServer) error
 	ClientStreamingResiliencyMetadata(ResiliencyWithMetadataService_ClientStreamingResiliencyMetadataServer) error
